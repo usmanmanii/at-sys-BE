@@ -1,0 +1,1050 @@
+{
+	"info": {
+		"_postman_id": "2d3c2771-a551-4357-8894-7c2b7839b875",
+		"name": "crud project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30057058"
+	},
+	"item": [
+		{
+			"name": "university",
+			"item": [
+				{
+					"name": "newUniversity",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"ucp\",\r\n    \"Address\": \"johr-town\" ,\r\n    \"ContactInfo\": \"contact@bahriauniversity.edu.pk\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/university",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"university"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alluniversity",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/university",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"university"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "universityById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/university/65301782ee5cb8916af3e26b",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"university",
+								"65301782ee5cb8916af3e26b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUniversityById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"Name\": \"Pakistan University lahore\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/university/65301782ee5cb8916af3e26b",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"university",
+								"65301782ee5cb8916af3e26b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "universityById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/university/6532bec1f29cb33e2efb57cf",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"university",
+								"6532bec1f29cb33e2efb57cf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "department",
+			"item": [
+				{
+					"name": "department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"pyscology\",\r\n    \"HeadOfDepartment\": \"Prof.umair\",\r\n    \"ContactInfo\": \"contact@csdepartment.edu\",\r\n    \"University\": \"6531018d8c5cc85d24f42800\" \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allDepartment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/department",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "departmentById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/6532bf96f29cb33e2efb57f1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"6532bf96f29cb33e2efb57f1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDepartmentById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"HeadOfDepartment\": \"dr iram\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/6532bf96f29cb33e2efb57f1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"6532bf96f29cb33e2efb57f1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "departmentById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/6532c7832313b83490e8b938",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"6532c7832313b83490e8b938"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "course",
+			"item": [
+				{
+					"name": "courses",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Title\": \"oop\",\r\n    \"Description\": \"vip\",\r\n    \"Credits\": 3,\r\n    \"Department\": \"65316cf0332a614701418241\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/courses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allCourses",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/courses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "coursesById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/courses/6532b4a7b9d4dcd7c2b1958d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"courses",
+								"6532b4a7b9d4dcd7c2b1958d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCourseById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Title\": \"computerProgramming\",\r\n    \"Description\": \"vip1\",\r\n    \"Credits\": 3,\r\n    \"Department\": \"65316cf0332a614701418241\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/courses/6532b4a7b9d4dcd7c2b1958d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"courses",
+								"6532b4a7b9d4dcd7c2b1958d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCoursesById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/courses/6532c7c1d1e4e2acca2f8009",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"courses",
+								"6532c7c1d1e4e2acca2f8009"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "instructor",
+			"item": [
+				{
+					"name": "newInstructor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Prof-usman\",\r\n    \"Email\": \"usman@gmailcom\",\r\n    \"ContactInfo\": 567,\r\n    \"Department\": \"65316cf0332a614701418241\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/instructors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"instructors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allInstructor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/instructors",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"instructors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "instructorById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/instructors/65317557004a35649440fce4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"instructors",
+								"65317557004a35649440fce4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateInstructorById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"Prof-ali\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/instructors/65317557004a35649440fce4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"instructors",
+								"65317557004a35649440fce4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteInstructorById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/instructors/6532bec2f29cb33e2efb57de",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"instructors",
+								"6532bec2f29cb33e2efb57de"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "newStudent",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"ahmed\",\r\n    \"Email\": \"ahmed@gmailcom\",\r\n    \"ContactInfo\": 123,\r\n    \"Department\": \"65316cf0332a614701418241\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/student",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allStudent",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/student",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "StudentById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/student/6532de9624dbbd52dd7de607",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"6532de9624dbbd52dd7de607"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateStudentById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"Name\":\"umair\",\r\n    \"Email\": \"umair@gmailcom\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/student/6532de9624dbbd52dd7de607",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"6532de9624dbbd52dd7de607"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteStudentById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/65317594004a35649440fce8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"65317594004a35649440fce8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "newRoom",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Name\": \"b-2\",\r\n    \"Capacity\": 30,\r\n    \"Location\": \"basement\",\r\n    \"Equipment\": \"Projector, Whiteboard\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/room",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allRoom",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/room",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "roomById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/room/65340685dbdaeabf37d842fe",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"room",
+								"65340685dbdaeabf37d842fe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateRoomById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"Equipment\": \"Projector\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/rooms/6534067cdbdaeabf37d842fc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rooms",
+								"6534067cdbdaeabf37d842fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteRoomById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/rooms/6532bec3f29cb33e2efb57e6",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"rooms",
+								"6532bec3f29cb33e2efb57e6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "timeslot",
+			"item": [
+				{
+					"name": "newtime",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DayOfWeek\": \"Monday\",\r\n    \"StartTime\": \"08:00 AM\",\r\n    \"EndTime\": \"2:00 AM\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/time-slots",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"time-slots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "alltime",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/time-slots",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"time-slots"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "timeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/time-slots/65318340004a35649440fcec",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"time-slots",
+								"65318340004a35649440fcec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatetimeById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DayOfWeek\": \"Friday\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/time-slots/653407d5a689ca35c226c097",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"time-slots",
+								"653407d5a689ca35c226c097"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTimeById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/time-slots/65340819285e331958f3829e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"time-slots",
+								"65340819285e331958f3829e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "class",
+			"item": [
+				{
+					"name": "newClass",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Semester\": 2.1,\r\n    \"Year\": 2024,\r\n    \"Course\": \"6531018d8c5cc85d24f42800\",\r\n    \"Instructor\": \"6531018d8c5cc85d24f42801\",\r\n    \"Room\": \"6531018d8c5cc85d24f42802\",\r\n    \"TimeSlot\": \"6531018d8c5cc85d24f42803\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/class",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allClasses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/class",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "classesById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/class/65340942a8f437735484f0e3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class",
+								"65340942a8f437735484f0e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateClassesById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n       \"Year\": 2027\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/class/65340942a8f437735484f0e3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class",
+								"65340942a8f437735484f0e3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClassesById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/class/653183c46b181f82914bed50",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"class",
+								"653183c46b181f82914bed50"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "timeSheet",
+			"item": [
+				{
+					"name": "getTimeTable",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/generate-timesheet/6532bec3f29cb33e2efb57e2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"generate-timesheet",
+								"6532bec3f29cb33e2efb57e2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getalltimeseets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/generate-timesheet",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"generate-timesheet"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
