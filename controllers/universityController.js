@@ -56,21 +56,7 @@ exports.updatedata = async (req, res) => {
 };
 
 
-// exports.updatedata = async (req, res) => {
-//   const id = req.params.id;
-//   try {
-//     const updateunibyid = await University.findOneAndUpdate(id, req.body, {
-//       new: true,
-//       runValidators: true,
-//     });
-//     if (!updateunibyid) {
-//       return res.status(404).json({ error: message });
-//     }
-//     res.status(200).json({ message:"Universit data updated successfully",updateunibyid});
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+
 
 exports.deleteUniversityById = async (req, res) => {
   const id = req.params.id;
