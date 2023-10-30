@@ -13,7 +13,7 @@ exports.createClass = async (req, res) => {
 
 exports.getAllClasses = async (req, res) => {
   try {
-    const classes = await Class.find().populate('Course','Instructor','Room','TimeSlot');
+    const classes = await Class.find().populate(['Course','Instructor','Room','TimeSlot']);
     res.status(200).json({message:"Successfully Retrived all CLasses ",classes});
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -24,7 +24,7 @@ exports.getAllClasses = async (req, res) => {
 exports.getClassById = async (req, res) => {
   const id = req.params.id;
   try {
-    const classInstance = await Class.findById(id).populate('Course','Instructor','Room','TimeSlot');
+    const classInstance = await Class.findById(id).populate(['Course','Instructor','Room','TimeSlot']);
     if (!classInstance) {
       return res.status(404).json({ error: "Class not found" });
     }

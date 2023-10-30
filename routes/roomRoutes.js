@@ -13,8 +13,8 @@ router.get('/room/:id', roomController.getRoomById);
 
 
 
-router.put('/rooms/:id', roomController.updateRoomById)
+router.put('/room/:id', roomController.updateRoomById)
 
-router.delete('/rooms/:id', roomController.deleteRoomById);
+router.delete('/room/:id', roomController.deleteRoomById);
 
 module.exports = router;
