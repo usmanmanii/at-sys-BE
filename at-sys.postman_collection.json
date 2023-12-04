@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "5c362188-ff30-42ba-ae91-df4ebcd7920d",
+		"name": "at-sys",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28001261"
+	},
+	"item": [
+		{
+			"name": "get all unidata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/unidata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"unidata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get unidata by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/unidata/651fa5eebceea4dd115c2d82",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"unidata",
+						"651fa5eebceea4dd115c2d82"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update unidata by id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"abcd uni2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/unidata/651fa5eebceea4dd115c2d82",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"unidata",
+						"651fa5eebceea4dd115c2d82"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete unidata by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3030/unidata/651fa5eebceea4dd115c2d82",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"unidata",
+						"651fa5eebceea4dd115c2d82"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add unidata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"UniversityID\": 1,\r\n    \"Name\": \"abcd uni\",\r\n    \"Address\": \"address abcd...\",\r\n    \"ContactInfo\": \"abcd area\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3030/unidata",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3030",
+					"path": [
+						"unidata"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
