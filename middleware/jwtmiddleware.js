@@ -1,24 +1,21 @@
-// const jwt = require('jsonwebtoken');
-// const config = require('../config'); 
+const jwt = require('jsonwebtoken');
 
-// const secretKey = config.jwtSecretKey;
- 
-// const authenticateToken = async (req, res, next) => {
-//   const token = req.headers.authorization;
+const secretKey = process.env.JWT_SECRET; 
 
-//   if (!token) {
-//     return res.status(401).json({ message: 'Unauthorized: No token provided' });
-//   }
+const authenticateToken = (req, res, next) => {
+  const token = req.headers.authorization;
 
-//   jwt.verify(token, secretKey, (err, user) => {
-//     if (err) {
-//       return res.status(403).json({ message: 'Forbidden: Invalid token' });
-//     }
-//     req.user = user; 
-//     next();
-//   })
-// };
+  if (!token) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided' });
+  }
 
-// module.exports = {
-//   authenticateToken,
-// };
+  jwt.verify(token, secretKey, (err, user) => { 
+    if (err) {
+      return res.status(403).json({ message: 'Forbidden: Invalid token' });
+    }
+    req.user = user;
+    next();
+  });
+};
+
+module.exports = authenticateToken;

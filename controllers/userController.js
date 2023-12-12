@@ -71,6 +71,7 @@ exports.signUp = async (req, res) => {
       picture: "https://i.imgur.com/Zvno7g3.png",
       finished_setting_up: req.body.position === "Driver" ? false : true,
     });
+
     createAndSendToken(newUser, res, 201);
   } catch (error) {
     console.log(error);
@@ -140,27 +141,27 @@ exports.login = async (req, res) => {
 //   }
 // };
 
-// exports.checkToken = async (req, res) => {
-//   console.log("checking token", req.body.token);
-//   try {
-//     const decoded = await promisify(jsonwebtoken.verify)(
-//       req.body.token,
-//       process.env.JWT_SECRET
-//     );
-//     const currentUser = User.findById(decoded);
-//     if (currentUser) {
-//       return res.status(200).json({ error: false, message: "Valid Token" });
-//     } else {
-//       return res.status(401).json({ error: true, message: "Invalid Token" });
-//     }
-//   } catch (error) {
-//     if (error.name === "JsonWebTokenError")
-//       return res.status(401).json({ error: true, message: "Invalid Token" });
-//     else if (error.name === "TokenExpiredError") {
-//       return res.status(401).json({ error: true, message: "Token expired" });
-//     }
-//   }
-// };
+exports.checkToken = async (req, res) => {
+  console.log("checking token", req.body.token);
+  try {
+    const decoded = await promisify(jsonwebtoken.verify)(
+      req.body.token,
+      process.env.JWT_SECRET
+    );
+    const currentUser = User.findById(decoded);
+    if (currentUser) {
+      return res.status(200).json({ error: false, message: "Valid Token" });
+    } else {
+      return res.status(401).json({ error: true, message: "Invalid Token" });
+    }
+  } catch (error) {
+    if (error.name === "JsonWebTokenError")
+      return res.status(401).json({ error: true, message: "Invalid Token" });
+    else if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ error: true, message: "Token expired" });
+    }
+  }
+};
 
 exports.googleLogin = async (req, res) => {
   try {

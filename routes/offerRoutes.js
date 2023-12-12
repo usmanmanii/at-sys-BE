@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const offerController = require("../controllers/offerController");
-const authenticateToken = require("../authMiddleware");
+const authenticateToken = require("../middleware/jwtmiddleware");
 
 router.get("/get-ride", (req, res) => {
   offerController.getOffer(req, res);

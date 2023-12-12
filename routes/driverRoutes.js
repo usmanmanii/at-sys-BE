@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const driverController = require("../controllers/driverController");
-const authenticateToken = require("../authMiddleware");
+const authenticateToken = require("../middleware/jwtmiddleware");
 
 router.get("/get-cities", (req, res) => {
   driverController.getCities(req, res);
