@@ -14,6 +14,7 @@ const createAndSendToken = (user, res, statusCode) => {
   const token = signToken(user._id, user.position);
   return res.status(statusCode).json({ token });
 };
+
 exports.checkEmail = async (req, res) => {
   const emailCheck = await User.findOne({ email: req.body.email });
   console.log(emailCheck);
@@ -189,23 +190,35 @@ exports.googleLogin = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    var currentUser = await User.findOne({ _id: req.user._id });
-    if (!currentUser)
-      return res.status(404).json({ error: true, message: "Error Occured" });
-    if (currentUser.position == "Driver") {
-      var driver = await Driver.findOne({ user: req.user._id });
-      if (driver) {
-        currentUser = { ...driver.toObject(), ...currentUser.toObject() };
-      }
+    if (!req.user || !req.user._id) {
+      return res.status(404).json({ error: true, message: "User not found" });
     }
+
+    const currentUser = await User.findOne({ _id: req.user._id });
+
+    if (!currentUser || !currentUser._id) {
+      return res.status(404).json({ error: true, message: "User not found" });
+    }
+
+    if (currentUser.position == "Driver") {
+      const driver = await Driver.findOne({ user: req.user._id });
+
+      if (!driver || !driver._id) {
+        return res.status(404).json({ error: true, message: "Driver not found" });
+      }
+
+      currentUser = { ...driver.toObject(), ...currentUser.toObject() };
+    }
+
     delete currentUser.password;
-    // console.log(currentUser);
+
     return res.status(200).json({ message: "ok", user_data: currentUser });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });
   }
 };
+
 
 exports.updateUser = async (req, res, namesArray) => {
   try {
