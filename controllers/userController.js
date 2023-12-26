@@ -70,7 +70,8 @@ exports.signUp = async (req, res) => {
       gender: req.body.gender,
       position: req.body.position,
       picture: "https://i.imgur.com/Zvno7g3.png",
-      finished_setting_up: req.body.position === "Driver" ? false : true,
+      Admin: req.body.Admin || false,
+       finished_setting_up: req.body.position === "Driver" ? false : true,
     });
 
     createAndSendToken(newUser, res, 201);

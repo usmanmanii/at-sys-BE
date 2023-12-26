@@ -7,6 +7,8 @@ const axios = require("axios");
 const sharp = require("sharp");
 const fs = require("fs").promises;
 const authenticateToken = require("../middleware/jwtmiddleware");
+const admin = require('../middleware/onlyAdmin');
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -18,7 +20,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.post("/auth/create", (req, res) => {
+router.post("/auth/create",  (req, res) => {
   console.log("\n");
   console.log("host: " + req.hostname);
   console.log("pathname: " + req.path);
@@ -48,7 +50,7 @@ router.get("/user", authenticateToken, (req, res) => {
 router.post(
   "/update-user",
   upload.array("images"),
-  authenticateToken,
+  authenticateToken,admin,
   async (req, res) => {
     try {
       var base64Images;

@@ -2,16 +2,18 @@ const express = require('express');
 const router = express.Router();
 
 const instructorController = require('../controllers/instructorController');
+const authenticateToken = require('../middleware/jwtmiddleware');
+const admin = require('../middleware/onlyAdmin');
 
 
-router.get('/instructors', instructorController.getAllInstructors);
+router.post('/instructors', admin, instructorController.createInstructor);
 
-router.post('/instructors', instructorController.createInstructor);
+router.get('/instructors', authenticateToken, instructorController.getAllInstructors);
 
-router.get('/instructors/:id', instructorController.getInstructorById);
+router.get('/instructors/:id', authenticateToken, instructorController.getInstructorById);
 
-router.put('/instructors/:id', instructorController.updateInstructorById);
+router.put('/instructors/:id', admin, instructorController.updateInstructorById);
 
-router.delete('/instructors/:id', instructorController.deleteInstructorById);
+router.delete('/instructors/:id', admin, instructorController.deleteInstructorById);
 
 module.exports = router;

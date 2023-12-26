@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const timesheetController = require('../controllers/timesheetController')
+const authenticateToken = require('../middleware/jwtmiddleware');
 
 router.get('/generate-timesheet/:studentId', async (req, res) => {
     const studentId = req.params.studentId;  
