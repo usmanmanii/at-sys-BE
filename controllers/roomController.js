@@ -55,12 +55,26 @@ exports.updateRoomById = async (req, res) => {
 
 exports.deleteRoomById = async (req, res) => {
   const id = req.params.id;
+  const {harddelete} = req.body;
   try {
-    const room = await Room.findByIdAndDelete(id);
-    if (!room) {
-      return res.status(404).json({ error: "Room not found" });
+   if (!harddelete) {
+      const room = await Room.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "Room deleted softly successfully" });
+      if (!room) {
+        return res.status(404).json({ error: "Room not found" });
+      }
     }
-    res.status(200).json({ message: "Room deleted successfully" });
+    else {
+      const room = await Room.findByIdAndDelete(id);
+      if (!room) {
+        res.status(404).json({ message: "Room not found" });
+      }
+      res.status(200).json({ message: "Room deleted hardly successfully" });
+
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

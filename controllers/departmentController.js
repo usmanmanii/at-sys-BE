@@ -50,12 +50,26 @@ exports.updateDepartmentById = async (req, res) => {
 
 exports.deleteDepartmentById = async (req, res) => {
   const id = req.params.id;
+   const {harddelete} = req.body;
   try {
-    const department = await Department.findByIdAndDelete(id);
-    if (!department) {
-      return res.status(404).json({ error: "Department not found" });
+    if (!harddelete) {
+      const department = await Department.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "department deleted softly successfully" });
+      if (!department) {
+        return res.status(404).json({ error: "department not found" });
+      }
     }
-    res.status(200).json({message:"Department deleted successfully"});
+    else {
+      const course = await Department.findByIdAndDelete(id);
+      if (!course) {
+        res.status(404).json({ message: "department not found" });
+      }
+      res.status(200).json({ message: "department deleted hardly successfully" });
+
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

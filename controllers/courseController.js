@@ -50,12 +50,26 @@ exports.updateCourseById = async (req, res) => {
 
 exports.deleteCourseById = async (req, res) => {
   const id = req.params.id;
+  const {harddelete} = req.body;
   try {
-    const course = await Course.findByIdAndDelete(id);
-    if (!course) {
-      return res.status(404).json({ error: "Course not found" });
+    if (!harddelete) {
+      const course = await Course.findByIdAndUpdate(id,
+        { delete: true },
+      {new: true}
+      );
+      res.status(200).json({ message: "Course deleted softly successfully" });
+      if (!course) {
+        return res.status(404).json({ error: "Course not found" });
+      } 
     }
-    res.status(200).json({ message: "Course deleted successfully" });
+    else {
+      const course = await Course.findByIdAndDelete(id);
+      if (!course) {
+      res.status(404).json({message: "Course not found" });
+      }
+      res.status(200).json({ message: "Course deleted hardly successfully" });
+
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

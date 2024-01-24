@@ -60,13 +60,26 @@ exports.updatedata = async (req, res) => {
 
 exports.deleteUniversityById = async (req, res) => {
   const id = req.params.id;
+  const {harddelete} = req.body;
   try {
-    const university = await University.findByIdAndDelete(id);
-    if (!university) {
-      return res.status(404).json({ error: "university not found" });
+   if (!harddelete) {
+      const university = await University.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "University deleted softly successfully",  });
+      if (!university) {
+        return res.status(404).json({ error: "University not found" });
+      }
     }
-    console.log("University deleted successfully");
-    res.status(200).json({message:"university deleted successfully",university});
+    else {
+      const university = await University.findByIdAndDelete(id);
+      if (!university) {
+        res.status(404).json({ message: "University not found" });
+      }
+      res.status(200).json({ message: "University deleted hardly successfully" });
+
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

@@ -53,12 +53,26 @@ exports.updateTimeSlotById = async (req, res) => {
 
 exports.deleteTimeSlotById = async (req, res) => {
   const id = req.params.id;
+  const {harddelete} = req.body;
   try {
-    const timeSlot = await TimeSlot.findByIdAndDelete(id);
-    if (!timeSlot) {
-      return res.status(404).json({ error: "Time slot not found" });
+   if (!harddelete) {
+      const time = await TimeSlot.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "TimeSlot deleted softly successfully" });
+      if (!time) {
+        return res.status(404).json({ error: "TimeSlot not found" });
+      }
     }
-    res.status(200).json({ message: "Time slot deleted successfully" });
+    else {
+      const time = await TimeSlot.findByIdAndDelete(id);
+      if (!time) {
+        res.status(404).json({ message: "TimeSlot not found" });
+      }
+      res.status(200).json({ message: "TImeSlot deleted hardly successfully" });
+
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

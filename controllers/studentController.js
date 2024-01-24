@@ -53,12 +53,26 @@ exports.updateStudentById = async (req, res) => {
 
 exports.deleteStudentById = async (req, res) => {
   const id = req.params.id;
+  const {harddelete} = req.body;
   try {
-    const student = await Student.findByIdAndDelete(id);
-    if (!student) {
-      return res.status(404).json({ error: "Student not found" });
+    if (!harddelete) {
+      const student = await Student.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "Student deleted softly successfully" });
+      if (!student) {
+        return res.status(404).json({ error: "Student not found" });
+      }
     }
-    res.status(200).json({ message: "Student deleted successfully" });
+    else {
+      const  student= await Student.findByIdAndDelete(id);
+      if (!student) {
+        res.status(404).json({ message: "Student not found" });
+      }
+      res.status(200).json({ message: "Student deleted hardly successfully" });
+
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

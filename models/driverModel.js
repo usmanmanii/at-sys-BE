@@ -60,6 +60,8 @@ const driverSchema = new Schema(
           bsonType: "int",
           // required: false,
         },
+    delete: { type: Boolean, default: false }
+
       },
     },
     // finished_setting_up: {
@@ -67,7 +69,8 @@ const driverSchema = new Schema(
     //   required: true,
     // },
   },
-  { timestamps: true }
+  { timestamps: true },
+  
 );
 const Driver = mongoose.model("Driver", driverSchema);
 

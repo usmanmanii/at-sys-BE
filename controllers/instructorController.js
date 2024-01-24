@@ -54,12 +54,26 @@ exports.createInstructor = async (req, res) => {
 
   exports.deleteInstructorById = async (req, res) => {
     const id = req.params.id;
+    const {harddelete } =req.body;
     try {
-      const instructor = await Instructor.findByIdAndDelete(id);
+       if (!harddelete) {
+      const instructor = await Instructor.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "Instructor deleted softly successfully" });
       if (!instructor) {
         return res.status(404).json({ error: "Instructor not found" });
       }
-      res.status(200).json({ message: "Instructor deleted successfully" });
+    }
+    else {
+      const instructor = await Instructor.findByIdAndDelete(id);
+      if (!instructor) {
+        res.status(404).json({ message: "Instructor not found" });
+      }
+      res.status(200).json({ message: "Instructor deleted hardly successfully" });
+
+    }
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
