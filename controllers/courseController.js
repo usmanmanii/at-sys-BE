@@ -1,13 +1,22 @@
 const Course = require("../models/courseSchema");
 
 exports.createCourse = async (req, res) => {
-  try {
-    const course = new Course(req.body);
-    await course.save();
-    res.status(201).json({message:"Successfully Created Course",course});
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+    try {
+        const { name, credits, department } = req.body;
+        if (![1, 2, 3].includes(credits)) {
+            return res.status(400).json({ error: 'Invalid credits value. Must be 1, 2, or 3.' });
+        }
+        const course = new Course({
+            name,
+            credits,
+            department,
+        });
+        await course.save();
+
+        res.status(201).json({ message: 'Successfully Created Course', course });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 };
 
 exports.getAllCourses = async (req, res) => {
