@@ -1,43 +1,48 @@
 const Class = require('../models/classSchema');
+const TryCatchAynsc = require('../middleware/TryCatchAysnc');
 
-exports.createClass = async (req, res) => {
-  try {
+
+exports.createClass = TryCatchAynsc(async (req, res ,next) => {
     const newClass = new Class(req.body);
     await newClass.save();
     res.status(201).json({message:"Successfully Created New Class ",newClass});
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+    // res.status(500).json({ message: err.message });
+  //  return next(new errorhandler(err.message , 400));
+  });
 
 
-exports.getAllClasses = async (req, res) => {
-  try {
+exports.getAllClasses = TryCatchAynsc( async (req, res) => {
+ 
     const classes = await Class.find().populate(['Course','Instructor','Room','TimeSlot']);
-    res.status(200).json({message:"Successfully Retrived all CLasses ",classes});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+
+    let page = Number(req.query.page) || 1;
+    let limit = Number(req.query.limit) || 3;
+
+    let skip = (page - 1)*limit;
+
+    classes = await Class.find().skip(skip).limit(limit).populate(['Course','Instructor','Room','TimeSlot']);
+if(classes.length<1)
+{
+  return res.status(404).json({ error: 'No more classes found' });
+}else{
+    res.status(200).json({message:"Successfully Retrived all CLasses ",classes , classesCount: classes.length});
+}
+ 
+});
 
 
-exports.getClassById = async (req, res) => {
+exports.getClassById = TryCatchAynsc( async (req, res) => {
   const id = req.params.id;
-  try {
     const classInstance = await Class.findById(id).populate(['Course','Instructor','Room','TimeSlot']);
     if (!classInstance) {
       return res.status(404).json({ error: "Class not found" });
     }
     res.status(200).json({message:"Successfully Retrived Class ",classInstance});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+  });
 
 
-exports.updateClassById = async (req, res) => {
+exports.updateClassById = TryCatchAynsc( async (req, res) => {
   const id = req.params.id;
-  try {
     const updatedClass = await Class.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
@@ -46,16 +51,12 @@ exports.updateClassById = async (req, res) => {
       return res.status(404).json({ error: "Class not found" });
     }
     res.status(200).json({message:"Successfully Updated  Class ",updatedClass});
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+  });
 
 
-exports.deleteClassById = async (req, res) => {
+exports.deleteClassById = TryCatchAynsc( async (req, res) => {
   const id = req.params.id;
   const {harddelete} = req.body;
-  try {
     if (harddelete) {
     const deleted = await Class.findByIdAndDelete(id);
       if (!deleted) {
@@ -73,7 +74,4 @@ exports.deleteClassById = async (req, res) => {
     }
     res.status(200).json({ message: "Class deleted softly successfully" });
   } 
-}catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+});
