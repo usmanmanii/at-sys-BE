@@ -1,4 +1,5 @@
 const TopReviews = require("../models/topReviewsModel");
+const TryCatchAynsc = require('../middleware/TryCatchAysnc');
 
 exports.addReview = async (req, res) => {
   try {
@@ -66,8 +67,8 @@ exports.addReview = async (req, res) => {
       .json({ error: true, message: "Error occured while adding reviews." });
   }
 };
-exports.getTopReviews = async (req, res) => {
-  try {
+exports.getTopReviews = TryCatchAynsc(async (req, res) => {
+  
     const data = await TopReviews.find();
     if (!data || data.length === 0)
       return res
@@ -78,8 +79,4 @@ exports.getTopReviews = async (req, res) => {
       message: "Reviews retreived successfuly.",
       data,
     });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: true, message: error.message });
-  }
-};
+});

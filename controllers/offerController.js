@@ -3,6 +3,7 @@ const Offer = require("../models/offerModel");
 const Driver = require("../models/driverModel");
 const User = require("../models/userModel");
 const { ObjectId } = require("mongodb");
+const TryCatchAynsc = require('../middleware/TryCatchAysnc');
 
 exports.getOffer = async (req, res) => {
   const passage = [];

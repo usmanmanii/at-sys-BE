@@ -1,6 +1,6 @@
 const Class = require('../models/classSchema');
 const TryCatchAynsc = require('../middleware/TryCatchAysnc');
-
+const pagelimits = require('../utils/pagelimit');
 
 exports.createClass = TryCatchAynsc(async (req, res ,next) => {
     const newClass = new Class(req.body);
@@ -15,10 +15,7 @@ exports.getAllClasses = TryCatchAynsc( async (req, res) => {
  
     const classes = await Class.find().populate(['Course','Instructor','Room','TimeSlot']);
 
-    let page = Number(req.query.page) || 1;
-    let limit = Number(req.query.limit) || 3;
-
-    let skip = (page - 1)*limit;
+   const {page,limit,skip} = await pagelimits(req)
 
     classes = await Class.find().skip(skip).limit(limit).populate(['Course','Instructor','Room','TimeSlot']);
 if(classes.length<1)

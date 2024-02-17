@@ -1,43 +1,39 @@
 const Instructor = require("../models/instructorSchema");
+const TryCatchAynsc = require('../middleware/TryCatchAysnc');
+const pagelimit = require('../utils/pagelimit');
 
-
-exports.createInstructor = async (req, res) => {
-    try {
+exports.createInstructor = TryCatchAynsc( async (req, res) => {
       const instructor = new Instructor(req.body);
       await instructor.save();
       res.status(201).json({message:"Successfully created Instructor  ",instructor});
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  };
+    
+  });
   
 
-  exports.getAllInstructors = async (req, res) => {
-    try {
+  exports.getAllInstructors = TryCatchAynsc(async (req, res) => {
+    
       const instructors = await Instructor.find().populate('Department');
-      res.status(200).json({message:"Successfully retrived all Instructor data ",instructors});
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
+      const {page , skip, limit } = await pagelimit(req);
+      instructors = await Instructor.find().skip(skip).limit(limit).populate('Department');
+      res.status(200).json({message:"Successfully retrived all Instructor data ",instructors , instructorsCount: instructors.length} );
+    
+  });
   
 
-  exports.getInstructorById = async (req, res) => {
+  exports.getInstructorById = TryCatchAynsc(async (req, res) => {
     const id = req.params.id;
-    try {
+   
       const instructor = await Instructor.findById(id).populate('Department');
       if (!instructor) {
         return res.status(404).json({ error: "Instructor not found" });
       }
       res.status(200).json({message:"Successfully retrived Instructor data ",instructor});
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
+    
+  });
   
-  exports.updateInstructorById = async (req, res) => {
+  exports.updateInstructorById = TryCatchAynsc(async (req, res) => {
     const id = req.params.id;
-    try {
+   
       const updatedInstructor = await Instructor.findByIdAndUpdate(id, req.body, {
         new: true,
         runValidators: true,
@@ -46,16 +42,14 @@ exports.createInstructor = async (req, res) => {
         return res.status(404).json({ error: "Instructor not found" });
       }
       res.status(200).json({message:"Successfully updated  Instructor data",updatedInstructor});
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+    
+  });
   
 
-  exports.deleteInstructorById = async (req, res) => {
+  exports.deleteInstructorById = TryCatchAynsc(async (req, res) => {
     const id = req.params.id;
     const {harddelete } =req.body;
-    try {
+   
        if (!harddelete) {
       const instructor = await Instructor.findByIdAndUpdate(id,
         { delete: true },
@@ -74,7 +68,5 @@ exports.createInstructor = async (req, res) => {
       res.status(200).json({ message: "Instructor deleted hardly successfully" });
 
     }
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+   
+  });

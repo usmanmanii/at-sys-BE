@@ -57,8 +57,10 @@ app.listen(3030, () => {
 
 app.use((req, res , error , next) => {
   error.status = error.status || 500;
-  res.status(404).json({ 
-    // status:error.status,
+  res.status(error.status).json({ 
+    status: error.status,
     error: true,
-     message: error.message});
+    message: error.message
+  });
 });
+

@@ -4,9 +4,10 @@ const TimeSlot = require('../models/timeSlotSchema');
 const Course = require('../models/courseSchema');
 const Instructor = require('../models/instructorSchema');
 const Student = require('../models/studentSchema');
+const TryCatchAynsc = require('../middleware/TryCatchAysnc');
 
-exports.generateTimeSheet = async (studentId) => {
-  try {
+exports.generateTimeSheet = TryCatchAynsc(async (studentId) => {
+  
     const students = await Student.find({ _id: studentId }).exec();
 
     if (students.length === 0) {
@@ -109,11 +110,9 @@ exports.generateTimeSheet = async (studentId) => {
     console.log('Final Timesheet:', timesheet);
 
     return timesheet;
-  } catch (err) {
-    console.error('Error in generateTimeSheet:', err);
-    throw err;
-  }
-};
+ 
+  
+});
 
 function getRandomItemFromArray(array) {
   if (array.length === 0) {
