@@ -12,7 +12,7 @@ exports.createInstructor = TryCatchAynsc( async (req, res) => {
 
   exports.getAllInstructors = TryCatchAynsc(async (req, res) => {
     
-      const instructors = await Instructor.find().populate('Department');
+      let instructors = await Instructor.find().populate('Department');
       const {page , skip, limit } = await pagelimit(req);
       instructors = await Instructor.find().skip(skip).limit(limit).populate('Department');
       res.status(200).json({message:"Successfully retrived all Instructor data ",instructors , instructorsCount: instructors.length} );

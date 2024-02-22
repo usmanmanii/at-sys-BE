@@ -13,7 +13,7 @@ exports.createStudent = TryCatchAynsc(async (req, res) => {
 exports.getAllStudents = TryCatchAynsc(async (req, res) => {
   
 
-    const students = await Student.find().populate('Department');
+    let students = await Student.find().populate('Department');
   const { page ,  limit , skip} = await pagelimit(req);
     students = await Student.find().skip(skip).limit(limit).populate('Department');
     res.status(200).json({message:"Successfully retrived all Students",students ,  studentsCount : students.length});

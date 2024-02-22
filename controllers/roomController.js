@@ -13,7 +13,7 @@ exports.createRoom = TryCatchAynsc( async (req, res) => {
 
 exports.getAllRooms = TryCatchAynsc(async (req, res) => {
   
-    const rooms = await Room.find();
+    let rooms = await Room.find();
     const { page, limit , skip } = await pagelimit(req);
     rooms = await Room.find().skip(skip).limit(limit);
     res.status(200).json({message : "Successfully Retrived all Rooms",rooms , roomscount: rooms.length});

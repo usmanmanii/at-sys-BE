@@ -55,12 +55,3 @@ app.listen(3030, () => {
   console.log("App Listening on 3030");
 });
 
-app.use((req, res , error , next) => {
-  error.status = error.status || 500;
-  res.status(error.status).json({ 
-    status: error.status,
-    error: true,
-    message: error.message
-  });
-});
-
