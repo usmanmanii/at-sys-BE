@@ -11,7 +11,7 @@ exports.createDepartment = TryCatchAynsc(async (req, res) => {
 });
 
   exports.getAllDepartments = TryCatchAynsc( async (req, res) => {
-    const departments = await Department.find().populate('University');
+    let departments = await Department.find().populate('University');
     const {page,limit,skipp} = await pagelimit(req)
     departments = await Department.find().skip(skipp).limit(limit).populate('University');
     res.status(200).json({message:"Successfully retrieved all departments",departments , departmentsCount: departments.length});
