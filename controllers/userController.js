@@ -5,6 +5,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const TryCatchAynsc = require('../middleware/TryCatchAysnc');
 const pagelimit =  require('../utils/pagelimit');
+const sendMail = require('../utils/SendMail');
 
 const signToken = (_id, position) => {
   return jsonwebtoken.sign({ _id, position }, process.env.JWT_SECRET, {
@@ -77,6 +78,18 @@ exports.signUp = async (req, res) => {
     });
 
     createAndSendToken(newUser, res, 201);
+    const to = req.body.email; // Recipient's email address
+    const subject = "Welcome to Our Platform"; // Email subject
+    const text = "Hello, welcome to our platform!"; // Plain text body
+    const html = "<b>Hello, welcome to our platform!</b>"; // HTML body
+
+    const emailResult = await sendMail(to, subject, text, html); 
+
+    if (emailResult.success) {
+      res.status(201).json({ message: "User registered successfully. Welcome email sent." });
+    } else {
+      res.status(500).json({ message: "User registered successfully, but there was an error sending the welcome email." });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

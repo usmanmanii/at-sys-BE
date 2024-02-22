@@ -14,4 +14,6 @@ router.get('/class/:id', authenticateToken, classController.getClassById);
 router.put('/class/:id', authenticateToken, admin, classController.updateClassById);
 
 router.delete('/class/:id', authenticateToken, admin, classController.deleteClassById);
+
+
 module.exports = router;
