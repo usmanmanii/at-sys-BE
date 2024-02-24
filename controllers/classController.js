@@ -1,9 +1,13 @@
 const Class = require('../models/classSchema');
 const TryCatchAynsc = require('../middleware/TryCatchAysnc');
 const pagelimits = require('../utils/pagelimit');
+const mongoose = require('mongoose');
 
 exports.createClass = TryCatchAynsc(async (req, res ,next) => {
-    const newClass = new Class(req.body);
+    const newClass = new Class({
+// _id:new mongoose.Types.ObjectId('65d60bb08db18e203d52d018'),
+    ...req.body,
+    });
     await newClass.save();
     res.status(201).json({message:"Successfully Created New Class ",newClass});
     // res.status(500).json({ message: err.message });
@@ -13,7 +17,7 @@ exports.createClass = TryCatchAynsc(async (req, res ,next) => {
 
 exports.getAllClasses = TryCatchAynsc( async (req, res) => {
  
-    const classes = await Class.find().populate(['Course','Instructor','Room','TimeSlot']);
+  let classes = await Class.find().populate(['Course','Instructor','Room','TimeSlot']);
 
    const {page,limit,skip} = await pagelimits(req)
 

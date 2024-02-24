@@ -12,7 +12,7 @@ exports.createTimeSlot = TryCatchAynsc(async (req, res) => {
 
 exports.getAllTimeSlots = TryCatchAynsc(async (req, res) => {
  
-    const timeSlots = await TimeSlot.find();
+    let timeSlots = await TimeSlot.find();
     const { page, limit , skip } = await pagelimit(req);
     timeSlots = await TimeSlot.find().skip(skip).limit(limit);
     res.status(200).json({ message: "ALL Time slots Retrived successfully" ,timeSlots ,  timeslotsCounts: timeSlots.length});
