@@ -3,8 +3,8 @@ const Driver = require("../models/driverModel");
 const validator = require("validator");
 const jsonwebtoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const TryCatchAynsc = require('../middleware/TryCatchAysnc');
-const pagelimit =  require('../utils/pagelimit');
+const TryCatchAynsc = require("../middleware/TryCatchAysnc");
+const pagelimit = require("../utils/pagelimit");
 
 const signToken = (_id, position) => {
   return jsonwebtoken.sign({ _id, position }, process.env.JWT_SECRET, {
@@ -73,7 +73,7 @@ exports.signUp = async (req, res) => {
       position: req.body.position,
       picture: "https://i.imgur.com/Zvno7g3.png",
       Admin: req.body.Admin || false,
-       finished_setting_up: req.body.position === "Driver" ? false : true,
+      finished_setting_up: req.body.position === "Driver" ? false : true,
     });
 
     createAndSendToken(newUser, res, 201);
@@ -199,6 +199,8 @@ exports.getUser = async (req, res) => {
 
     const currentUser = await User.findOne({ _id: req.user._id });
 
+    console.log("444444 currentUser", currentUser);
+
     if (!currentUser || !currentUser._id) {
       return res.status(404).json({ error: true, message: "User not found" });
     }
@@ -206,11 +208,17 @@ exports.getUser = async (req, res) => {
     if (currentUser.position == "Driver") {
       const driver = await Driver.findOne({ user: req.user._id });
 
+      console.log("444444 driver", driver);
+
       if (!driver || !driver._id) {
-        return res.status(404).json({ error: true, message: "Driver not found" });
+        return res
+          .status(404)
+          .json({ error: true, message: "Driver not found" });
       }
 
       currentUser = { ...driver.toObject(), ...currentUser.toObject() };
+
+      console.log("444444 currentUser .user", currentUser);
     }
 
     delete currentUser.password;
@@ -221,7 +229,6 @@ exports.getUser = async (req, res) => {
     return res.status(500).json({ message: error });
   }
 };
-
 
 exports.updateUser = async (req, res, namesArray) => {
   try {
