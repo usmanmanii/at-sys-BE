@@ -1,40 +1,36 @@
 const Department = require("../models/departmentSchema"); 
+const TryCatchAynsc = require('../middleware/TryCatchAysnc');
+const pagelimit = require('../utils/pagelimit');
 
-exports.createDepartment = async (req, res) => {
-  try {
+
+exports.createDepartment = TryCatchAynsc(async (req, res) => {
     const department = new Department(req.body);
     await department.save();
     res.status(201).json({message:"Successfully Created Department",department});
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+  
+});
 
-exports.getAllDepartments = async (req, res) => {
-  try {
-    const departments = await Department.find().populate('University');
-    res.status(200).json({message:"Successfully retrieved all departments",departments});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+  exports.getAllDepartments = TryCatchAynsc( async (req, res) => {
+    let departments = await Department.find().populate('University');
+    const {page,limit,skipp} = await pagelimit(req)
+    departments = await Department.find().skip(skipp).limit(limit).populate('University');
+    res.status(200).json({message:"Successfully retrieved all departments",departments , departmentsCount: departments.length});
+});
 
-exports.getDepartmentById = async (req, res) => {
+exports.getDepartmentById = TryCatchAynsc(async (req, res) => {
   const id = req.params.id;
-  try {
+  
     const department = await Department.findById(id).populate('University');
     if (!department) {
       return res.status(404).json({ error: "Department not found" });
     }
     res.status(200).json({message :"Successfully retrieved department",department});
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+ 
+});
 
-exports.updateDepartmentById = async (req, res) => {
+exports.updateDepartmentById = TryCatchAynsc(async (req, res) => {
   const id = req.params.id;
-  try {
+ 
     const updatedDepartment = await Department.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
@@ -43,20 +39,30 @@ exports.updateDepartmentById = async (req, res) => {
       return res.status(404).json({ error: "Department not found" });
     }
     res.status(200).json({mesage:"Successfully updated department",updatedDepartment});
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+ 
+});
 
-exports.deleteDepartmentById = async (req, res) => {
+exports.deleteDepartmentById = TryCatchAynsc(async (req, res) => {
   const id = req.params.id;
-  try {
-    const department = await Department.findByIdAndDelete(id);
-    if (!department) {
-      return res.status(404).json({ error: "Department not found" });
+   const {harddelete} = req.body;
+ 
+    if (!harddelete) {
+      const department = await Department.findByIdAndUpdate(id,
+        { delete: true },
+        { new: true }
+      );
+      res.status(200).json({ message: "department deleted softly successfully" });
+      if (!department) {
+        return res.status(404).json({ error: "department not found" });
+      }
     }
-    res.status(200).json({message:"Department deleted successfully"});
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
+    else {
+      const course = await Department.findByIdAndDelete(id);
+      if (!course) {
+        res.status(404).json({ message: "department not found" });
+      }
+      res.status(200).json({ message: "department deleted hardly successfully" });
+
+    }
+  
+});

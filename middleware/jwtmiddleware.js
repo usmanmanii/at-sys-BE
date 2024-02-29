@@ -1,24 +1,41 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config'); 
+const jwt = require("jsonwebtoken");
 
-const secretKey = config.jwtSecretKey;
+const authenticateToken = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
 
-function authenticateToken(req, res, next) {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ message: 'Unauthorized: No token provided' });
-  }
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: 'Forbidden: Invalid token' });
+    if (!authHeader) {
+      return res.status(401).json({ message: "No token provided" });
     }
-    req.user = user; 
-    next();
-  });
-}
+    let token;
+    if (authHeader.startsWith("Bearer ")) {
+      token = authHeader.split(" ")[1];
+    } else {
+      token = authHeader;
+    }
 
-module.exports = {
-  authenticateToken,
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+      if (err) {
+        return res.status(401).json({ message: "Invalid token" });
+      } else {
+        // const userId = decodedToken.userId;
+        const userId = decodedToken._id;
+
+        if (req.body.userId && req.body.userId !== userId) {
+          throw "Invalid user ID";
+        } else {
+          // added this line
+          req.user = decodedToken;
+
+          next();
+        }
+      }
+    });
+  } catch {
+    res.status(401).json({
+      error: new Error("Invalid request!"),
+    });
+  }
 };
+
+module.exports = authenticateToken;

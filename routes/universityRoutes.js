@@ -1,21 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const universityController = require('../controllers/universityController')
+const authenticateToken = require('../middleware/jwtmiddleware');
+const admin = require('../middleware/onlyAdmin');
 
 
-router.post('/university', universityController.createUniversity);
+router.post('/university',admin,universityController.createUniversity);
 
 
-router.get('/university', universityController.getdata)
+router.get('/university', authenticateToken,universityController.getdata)
 
 
 
-router.get('/university/:id', universityController.getUniversitybyId);
+router.get('/university/:id', authenticateToken, universityController.getUniversitybyId);
 
 
-router.put('/university/:id', universityController.updatedata)
+router.put('/university/:id', admin,universityController.updatedata)
 
-router.delete('/university/:id',  universityController.deleteUniversityById)
+router.delete('/university/:id',admin, universityController.deleteUniversityById)
 
 module.exports = router;
 

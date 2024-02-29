@@ -18,6 +18,8 @@ const Offer = require("../models/offerModel");
 // };
 
 exports.getCities = async (req, res) => {
+
+  console.log("getCities")
   try {
     const cities = await City.find(
       {

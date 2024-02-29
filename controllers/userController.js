@@ -3,6 +3,8 @@ const Driver = require("../models/driverModel");
 const validator = require("validator");
 const jsonwebtoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const TryCatchAynsc = require("../middleware/TryCatchAysnc");
+const pagelimit = require("../utils/pagelimit");
 
 const signToken = (_id, position) => {
   return jsonwebtoken.sign({ _id, position }, process.env.JWT_SECRET, {
@@ -69,8 +71,10 @@ exports.signUp = async (req, res) => {
       gender: req.body.gender,
       position: req.body.position,
       picture: "https://i.imgur.com/Zvno7g3.png",
+      Admin: req.body.Admin || false,
       finished_setting_up: req.body.position === "Driver" ? false : true,
     });
+
     createAndSendToken(newUser, res, 201);
   } catch (error) {
     console.log(error);
@@ -140,27 +144,27 @@ exports.login = async (req, res) => {
 //   }
 // };
 
-// exports.checkToken = async (req, res) => {
-//   console.log("checking token", req.body.token);
-//   try {
-//     const decoded = await promisify(jsonwebtoken.verify)(
-//       req.body.token,
-//       process.env.JWT_SECRET
-//     );
-//     const currentUser = User.findById(decoded);
-//     if (currentUser) {
-//       return res.status(200).json({ error: false, message: "Valid Token" });
-//     } else {
-//       return res.status(401).json({ error: true, message: "Invalid Token" });
-//     }
-//   } catch (error) {
-//     if (error.name === "JsonWebTokenError")
-//       return res.status(401).json({ error: true, message: "Invalid Token" });
-//     else if (error.name === "TokenExpiredError") {
-//       return res.status(401).json({ error: true, message: "Token expired" });
-//     }
-//   }
-// };
+exports.checkToken = async (req, res) => {
+  console.log("checking token", req.body.token);
+  try {
+    const decoded = await promisify(jsonwebtoken.verify)(
+      req.body.token,
+      process.env.JWT_SECRET
+    );
+    const currentUser = User.findById(decoded);
+    if (currentUser) {
+      return res.status(200).json({ error: false, message: "Valid Token" });
+    } else {
+      return res.status(401).json({ error: true, message: "Invalid Token" });
+    }
+  } catch (error) {
+    if (error.name === "JsonWebTokenError")
+      return res.status(401).json({ error: true, message: "Invalid Token" });
+    else if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ error: true, message: "Token expired" });
+    }
+  }
+};
 
 exports.googleLogin = async (req, res) => {
   try {
@@ -188,17 +192,36 @@ exports.googleLogin = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    var currentUser = await User.findOne({ _id: req.user._id });
-    if (!currentUser)
-      return res.status(404).json({ error: true, message: "Error Occured" });
-    if (currentUser.position == "Driver") {
-      var driver = await Driver.findOne({ user: req.user._id });
-      if (driver) {
-        currentUser = { ...driver.toObject(), ...currentUser.toObject() };
-      }
+    if (!req.user || !req.user._id) {
+      return res.status(404).json({ error: true, message: "User not found" });
     }
+
+    const currentUser = await User.findOne({ _id: req.user._id });
+
+    console.log("444444 currentUser", currentUser);
+
+    if (!currentUser || !currentUser._id) {
+      return res.status(404).json({ error: true, message: "User not found" });
+    }
+
+    if (currentUser.position == "Driver") {
+      const driver = await Driver.findOne({ user: req.user._id });
+
+      console.log("444444 driver", driver);
+
+      if (!driver || !driver._id) {
+        return res
+          .status(404)
+          .json({ error: true, message: "Driver not found" });
+      }
+
+      currentUser = { ...driver.toObject(), ...currentUser.toObject() };
+
+      console.log("444444 currentUser .user", currentUser);
+    }
+
     delete currentUser.password;
-    // console.log(currentUser);
+
     return res.status(200).json({ message: "ok", user_data: currentUser });
   } catch (error) {
     console.log(error);

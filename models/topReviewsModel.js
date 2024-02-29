@@ -8,6 +8,8 @@ const topReviewsSchema = new Schema(
     comment: { type: String, required: true, minLength: 12 },
     rate: { type: Number, required: true, min: 0, max: 5 },
     image: { type: String, required: true },
+    delete: { type: Boolean, default: false }
+  
   },
   { timestamps: true }
 );

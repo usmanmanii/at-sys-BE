@@ -2,15 +2,18 @@ const express = require('express');
 const router = express.Router ();
 
 const department = require('../controllers/departmentController');
+const authenticateToken = require('../middleware/jwtmiddleware');
+const admin = require('../middleware/onlyAdmin');
 
-router.get('/department', department.getAllDepartments);
 
-router.post('/department', department.createDepartment)
+router.get('/department', authenticateToken, department.getAllDepartments);
 
-router.get('/department/:id', department.getDepartmentById)
+router.post('/department', authenticateToken, admin, department.createDepartment);
 
-router.put('/department/:id',department.updateDepartmentById)
+router.get('/department/:id', authenticateToken, department.getDepartmentById);
 
-router.delete('/department/:id',department.deleteDepartmentById)
+router.put('/department/:id', authenticateToken, admin, department.updateDepartmentById);
+
+router.delete('/department/:id', authenticateToken, admin, department.deleteDepartmentById);
 
 module.exports = router;

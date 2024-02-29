@@ -46,13 +46,19 @@ const userSchema = new Schema(
     },
     position: {
       type: String,
-      required: false,
-      enum: ["Driver", "Passenger", undefined],
+      required: true,
+      enum: ["Driver", "Passenger", "Admin", "User",undefined],
     },
     finished_setting_up: {
       type: Boolean,
       required: true,
     },
+    Admin: {
+      type: Boolean,
+      default: false,
+    },
+    delete: { type: Boolean, default: false }
+    
   },
   { timestamps: true }
 );

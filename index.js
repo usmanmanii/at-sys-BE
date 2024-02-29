@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+require('dotenv').config();
+
 
 const app = express();
 const connectDB = require("./database").connectDB;
@@ -23,10 +25,15 @@ const timeRoutes= require("./routes/timeRoutes");
 const classRoutes=require("./routes/classRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const timesheetRoutes = require("./routes/timesheetRoutes");
+const dashboard = require("./routes/dashboardRoutes");
+const errorhandler = require("./middleware/errorhandler");
 
-app.listen(3030, () => {
-  console.log("App Listening on 3030");
-});
+
+// app.all('*' , (res,req , next)=>{
+// const err = new Error(`Cant find ${req.originalUrl} on this server!`);
+// err.status  = 'Fail';
+// err.statuscode = 404;
+// })
 
 app.use(userRoutes);
 app.use("/reviews", topReviewsRoutes);
@@ -42,6 +49,9 @@ app.use(userRoutes);
 app.use(classRoutes);
 app.use(courseRoutes);
 app.use(timesheetRoutes);
-app.use((req, res) => {
-  res.status(404).json({ error: true, message: "Page not found." });
+app.use(dashboard);
+app.use(errorhandler);
+app.listen(3030, () => {
+  console.log("App Listening on 3030");
 });
+

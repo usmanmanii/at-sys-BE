@@ -64,6 +64,8 @@ const offerSchema = new Schema(
       bsonType: "int",
       enum: [1, 2, 3, 4, 5],
     },
+    delete: { type: Boolean, default: false }
+
   },
   { timestamps: true }
 );
