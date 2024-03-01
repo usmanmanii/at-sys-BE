@@ -18,9 +18,12 @@ exports.createCourse = TryCatchAynsc(async (req, res , next) => {
 });
 
 exports.getAllCourses = TryCatchAynsc(async (req, res) => {
+
     let courses = await Course.find().populate('Department');
+
+    console.log("getAllCourses",courses)
     const {page,limit,skipp} = await pagelimit(req)
-    courses = await Course.find().skip(skipp).limit(limitt).populate('Department');
+    courses = await Course.find().skip(skipp).limit(limit).populate('Department');
     if(courses.length < 1) {
       return res.status(404).json({ error: 'No more courses found' });
     }else{
